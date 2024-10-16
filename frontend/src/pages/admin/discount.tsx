@@ -1,40 +1,36 @@
+import { useFetchData } from "6pp";
 import { ReactElement, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
 import { Skeleton } from "../../components/loader";
-import { useAllProductsQuery } from "../../redux/api/productAPI";
 import { RootState, server } from "../../redux/store";
-import { CustomError } from "../../types/api-types";
+import { AllDiscountResponse } from "../../types/api-types";
 
 interface DataType {
-  photo: ReactElement;
-  name: string;
-  price: number;
-  stock: number;
+  code: string;
+  amount: number;
+  _id: string;
   action: ReactElement;
 }
 
 const columns: Column<DataType>[] = [
   {
-    Header: "Photo",
-    accessor: "photo",
+    Header: "Id",
+    accessor: "_id",
+  },
+
+  {
+    Header: "Code",
+    accessor: "code",
   },
   {
-    Header: "Name",
-    accessor: "name",
-  },
-  {
-    Header: "Price",
-    accessor: "price",
-  },
-  {
-    Header: "Stock",
-    accessor: "stock",
+    Header: "Amount",
+    accessor: "amount",
   },
   {
     Header: "Action",
@@ -42,30 +38,19 @@ const columns: Column<DataType>[] = [
   },
 ];
 
-const Products = () => {
+const Discount = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, isError, error, data } = useAllProductsQuery(user?._id!);
+  const {
+    data,
+    loading: isLoading,
+    error,
+  } = useFetchData<AllDiscountResponse>(
+    `${server}/api/v1/payment/coupon/all?id=${user?._id}`,
+    "discount-codes"
+  );
 
   const [rows, setRows] = useState<DataType[]>([]);
-
-  if (isError) {
-    const err = error as CustomError;
-    toast.error(err.data.message);
-  }
-
-  useEffect(() => {
-    if (data)
-      setRows(
-        data.products.map((i) => ({
-          photo: <img src={i.photos?.[0]?.url} />,
-          name: i.name,
-          price: i.price,
-          stock: i.stock,
-          action: <Link to={`/admin/product/${i._id}`}>Manage</Link>,
-        }))
-      );
-  }, [data]);
 
   const Table = TableHOC<DataType>(
     columns,
@@ -75,15 +60,29 @@ const Products = () => {
     rows.length > 6
   )();
 
+  if (error) toast.error(error);
+
+  useEffect(() => {
+    if (data)
+      setRows(
+        data.coupons.map((i) => ({
+          _id: i._id,
+          code: i.code,
+          amount: i.amount,
+          action: <Link to={`/admin/discount/${i._id}`}>Manage</Link>,
+        }))
+      );
+  }, [data]);
+
   return (
     <div className="admin-container">
       <AdminSidebar />
       <main>{isLoading ? <Skeleton length={20} /> : Table}</main>
-      <Link to="/admin/product/new" className="create-product-btn">
+      <Link to="/admin/discount/new" className="create-product-btn">
         <FaPlus />
       </Link>
     </div>
   );
 };
 
-export default Products;
+export default Discount;

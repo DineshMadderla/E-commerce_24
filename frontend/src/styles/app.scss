@@ -4,7 +4,9 @@
   font-weight: 400;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -19,31 +21,47 @@ a {
   color: black;
 }
 
+button {
+  &:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.5;
+  }
+}
+
 $color1: white;
 $color2: rgb(46, 46, 46);
 $color3: rgb(0, 104, 136);
 
-.red { color: red; }
-.purple { color: rgb(47, 0, 255); }
-.green { color: rgb(0, 195, 0); }
+.red {
+  color: red;
+}
+.purple {
+  color: rgb(47, 0, 255);
+}
 
-@import "admin-styles/mixin", "home", "cart", "shipping", "login", "search", "admin-styles/dashboard", 
-        "admin-styles/products", "admin-styles/chart", "admin-styles/dashboardapp", "admin-styles/mediaquery";
+.green {
+  color: rgb(0, 195, 0);
+}
 
-.container, .checkout-container {
+@import "admin-styles/mixin", "home", "cart", "shipping", "login", "search","product-details",
+  "admin-styles/dashboard", "admin-styles/products", "admin-styles/chart",
+  "admin-styles/dashboardapp", "admin-styles/mediaquery";
+
+.container,
+.checkout-container {
   max-width: 1367px;
   width: 100%;
   margin: auto;
   overflow: auto;
-  > h1, > form {
+  > h1,
+  > form {
     @include heading;
     margin: 1rem 0;
   }
 }
 
-
-
-.heading, .header a {
+.heading,
+.header a {
   @include heading;
   margin: 1rem 0;
   text-align: center;
@@ -53,16 +71,17 @@ $color3: rgb(0, 104, 136);
   @include flex(row, flex-end, stretch, 1.2rem);
   padding: 1rem;
 
- 
-
-  a, button {
+  a,
+  button {
     font-size: 1.2rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
     color: $color2;
     letter-spacing: 2px;
-    &:hover { color: $color3; }
+    &:hover {
+      color: $color3;
+    }
   }
 
   dialog {
@@ -79,10 +98,14 @@ $color3: rgb(0, 104, 136);
   }
 }
 
-.not-found, .loader {
+.not-found,
+.loader {
   height: 80vh;
   @include flex(column);
-  > svg, > div { font-size: 5rem; }
+  > svg,
+  > div {
+    font-size: 5rem;
+  }
 }
 
 .admin-container {
@@ -96,17 +119,26 @@ $color3: rgb(0, 104, 136);
     padding: 1rem;
     z-index: 10;
     overflow-y: auto;
-    &::-webkit-scrollbar { display: none; }
+    &::-webkit-scrollbar {
+      display: none;
+    }
     > div {
       margin: 2rem 1rem;
-      > h5 { @include heading(2px); opacity: 0.8; margin: 1rem 0; }
+      > h5 {
+        @include heading(2px);
+        opacity: 0.8;
+        margin: 1rem 0;
+      }
       > ul {
         @include flex(column, unset, unset, 0.5rem);
         list-style: none;
         > li {
           padding: 0.5rem 1rem;
           border-radius: 10px;
-          a { color: rgba(0, 0, 0, 0.825); @include flex(row, unset); }
+          a {
+            color: rgba(0, 0, 0, 0.825);
+            @include flex(row, unset);
+          }
         }
       }
     }
@@ -116,7 +148,8 @@ $color3: rgb(0, 104, 136);
 .table {
   width: 100%;
   border-collapse: collapse;
-  th, td {
+  th,
+  td {
     padding: 8px;
     vertical-align: middle;
   }
@@ -132,7 +165,10 @@ $color3: rgb(0, 104, 136);
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.093);
     td {
       padding: 1rem;
-      &:first-child, &:last-child { border: none; }
+      &:first-child,
+      &:last-child {
+        border: none;
+      }
       img {
         width: 4rem;
         height: 4rem;
@@ -153,7 +189,9 @@ $color3: rgb(0, 104, 136);
         background-color: transparent;
         cursor: pointer;
         color: rgb(255, 44, 44);
-        &:hover { opacity: 0.6; }
+        &:hover {
+          opacity: 0.6;
+        }
       }
     }
   }
@@ -175,7 +213,8 @@ $color3: rgb(0, 104, 136);
   }
 }
 
-#hamburger, #close-sidebar {
+#hamburger,
+#close-sidebar {
   display: grid;
   place-items: center;
   @include square(3rem);
@@ -186,7 +225,8 @@ $color3: rgb(0, 104, 136);
   z-index: 9;
 }
 
-.skeleton-loader, .skeleton-shape {
+.skeleton-loader,
+.skeleton-shape {
   display: flex;
   flex-direction: column;
   height: 30px;
@@ -197,9 +237,22 @@ $color3: rgb(0, 104, 136);
   animation: skeleon-loading 1.5s infinite;
 }
 
-@keyframes loading-animation { to { transform: rotateZ(360deg); } }
-@keyframes up-and-down { to { transform: translate(-50%, -20%); } }
+@keyframes loading-animation {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes up-and-down {
+  to {
+    transform: translate(-50%, -20%);
+  }
+}
 @keyframes skeleon-loading {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }

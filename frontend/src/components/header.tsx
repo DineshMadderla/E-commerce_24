@@ -32,9 +32,7 @@ const Header = ({ user }: PropsType) => {
 
   return (
     <nav className="header">
-      {/* <Link onClick={() => setIsOpen(false)} to={"/"}>
-        <img src={logo} alt="Logo" className="logo" />
-      </Link> */}
+      
       <Link onClick={() => setIsOpen(false)} to={"/"}>
         HOME
       </Link>

@@ -2,15 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartReducerInitialState } from "../../types/reducer-types";
 import { CartItem, ShippingInfo } from "../../types/types";
 
+// Load Cart Items and Shipping Info from Local Storage
 const initialState: CartReducerInitialState = {
   loading: false,
-  cartItems: [],
+  cartItems: JSON.parse(localStorage.getItem("cartItems") || "[]"),
   subtotal: 0,
   tax: 0,
   shippingCharges: 0,
   discount: 0,
   total: 0,
-  shippingInfo: {
+  shippingInfo: JSON.parse(localStorage.getItem("shippingInfo") || "{}") || {
     address: "",
     city: "",
     state: "",
@@ -25,13 +26,18 @@ export const cartReducer = createSlice({
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
       state.loading = true;
-
       const index = state.cartItems.findIndex(
         (i) => i.productId === action.payload.productId
       );
 
-      if (index !== -1) state.cartItems[index] = action.payload;
-      else state.cartItems.push(action.payload);
+      if (index !== -1) {
+        state.cartItems[index] = action.payload;
+      } else {
+        state.cartItems.push(action.payload);
+      }
+
+      // Save updated cart to local storage
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       state.loading = false;
     },
 
@@ -40,6 +46,9 @@ export const cartReducer = createSlice({
       state.cartItems = state.cartItems.filter(
         (i) => i.productId !== action.payload
       );
+
+      // Save updated cart to local storage
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       state.loading = false;
     },
 
@@ -59,10 +68,20 @@ export const cartReducer = createSlice({
     discountApplied: (state, action: PayloadAction<number>) => {
       state.discount = action.payload;
     },
+
     saveShippingInfo: (state, action: PayloadAction<ShippingInfo>) => {
       state.shippingInfo = action.payload;
+
+      // Save shipping info to local storage
+      localStorage.setItem("shippingInfo", JSON.stringify(state.shippingInfo));
     },
-    resetCart: () => initialState,
+
+    resetCart: () => {
+      // Clear local storage and reset state
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("shippingInfo");
+      return initialState;
+    },
   },
 });
 
@@ -74,3 +93,5 @@ export const {
   saveShippingInfo,
   resetCart,
 } = cartReducer.actions;
+
+export default cartReducer.reducer;

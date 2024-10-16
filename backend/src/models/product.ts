@@ -6,10 +6,18 @@ const schema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter Name"],
     },
-    photo: {
-      type: String,
-      required: [true, "Please enter Photo"],
-    },
+    photos: [
+      {
+        public_id: {
+          type: String,
+          required: [true, "Please enter public id"],
+        },
+        url: {
+          type: String,
+          required: [true, "Please enter url"],
+        },
+      },
+    ],
     price: {
       type: Number,
       required: [true, "Please enter Price"],
@@ -22,6 +30,10 @@ const schema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter Category"],
       trim: true,
+    },
+    description: {
+      type: String,
+      required: [true, "Please Enter Description"],
     },
   },
   {

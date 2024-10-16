@@ -71,7 +71,7 @@
     background-color: rgba(0, 0, 0, 0.45);  // Slightly reduced opacity for background
     @include flex;
 
-    button {
+    button,a {
       @include flex;
       @include square(2.5rem);  // Smaller button size
       border-radius: 50%;  // Rounded button
@@ -86,5 +86,6 @@
         rotate: 15deg;  // Slightly less rotation on hover
       }
     }
+    
   }
 }

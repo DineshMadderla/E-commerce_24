@@ -26,16 +26,27 @@ const Cart = () => {
 
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
   };
+
   const decrementHandler = (cartItem: CartItem) => {
     if (cartItem.quantity <= 1) return;
 
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
   };
+
   const removeHandler = (productId: string) => {
     dispatch(removeCartItem(productId));
   };
+
   useEffect(() => {
     const { token: cancelToken, cancel } = axios.CancelToken.source();
+
+    // Reset discount if the coupon code is empty
+    if (!couponCode.trim()) {
+      dispatch(discountApplied(0));
+      setIsValidCouponCode(false);
+      dispatch(calculatePrice());
+      return;
+    }
 
     const timeOutID = setTimeout(() => {
       axios
@@ -59,11 +70,11 @@ const Cart = () => {
       cancel();
       setIsValidCouponCode(false);
     };
-  }, [couponCode]);
+  }, [couponCode, dispatch]);
 
   useEffect(() => {
     dispatch(calculatePrice());
-  }, [cartItems]);
+  }, [cartItems, dispatch]);
 
   return (
     <div className="cart">
