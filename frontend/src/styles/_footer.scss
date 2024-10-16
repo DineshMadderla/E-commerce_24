@@ -1,0 +1,84 @@
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0; // Reduced padding
+  
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 10px; // Reduced horizontal padding
+    }
+  
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  
+    .footer-col {
+      flex: 1;
+      min-width: 200px; // Adjusted to fit better
+      margin-bottom: 15px; // Reduced margin
+  
+      h4 {
+        font-size: 16px; // Smaller font size
+        color: #f4f4f4;
+        text-transform: uppercase;
+        margin-bottom: 10px; // Less margin
+        position: relative;
+  
+        &:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -8px;
+          background-color: $color3;
+          height: 2px;
+          width: 40px; // Adjusted width
+        }
+      }
+  
+      ul {
+        list-style: none;
+        padding: 0;
+  
+        li {
+          margin-bottom: 5px; // Reduced spacing
+  
+          a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+  
+            &:hover {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  
+    .social-links {
+      @include flex(column, flex-start, flex-start);
+      
+      a {
+        height: 30px; // Reduced size
+        width: 30px;
+        background-color: #404040;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+  
+        &:hover {
+          background-color: $color3;
+        }
+  
+        svg {
+          color: #fff;
+          font-size: 16px; // Smaller icon size
+        }
+      }
+    }
+  }
+  

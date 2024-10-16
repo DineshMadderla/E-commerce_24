@@ -43,9 +43,9 @@ $color3: rgb(0, 104, 136);
   color: rgb(0, 195, 0);
 }
 
-@import "admin-styles/mixin", "home", "cart", "shipping", "login", "search","product-details",
-  "admin-styles/dashboard", "admin-styles/products", "admin-styles/chart",
-  "admin-styles/dashboardapp", "admin-styles/mediaquery";
+@import "admin-styles/mixin", "home", "cart", "shipping", "login", "search",
+  "product-details","footer", "admin-styles/dashboard", "admin-styles/products",
+  "admin-styles/chart", "admin-styles/dashboardapp", "admin-styles/mediaquery";
 
 .container,
 .checkout-container {
