@@ -15,6 +15,7 @@ This is the frontend of an e-commerce platform built with **React**, **Redux Too
 
 ## Tech Stack
 
+- **TypeScript**: Strong typing for better development experience and fewer runtime errors.
 - **React**: JavaScript library for building user interfaces.
 - **Redux Toolkit**: For managing the application’s state with ease.
 - **React Router**: For client-side routing between different pages.
